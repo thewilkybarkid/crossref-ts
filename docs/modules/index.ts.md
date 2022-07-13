@@ -15,7 +15,7 @@ Added in v0.1.0
 - [codecs](#codecs)
   - [WorkC](#workc)
 - [model](#model)
-  - [Work (type alias)](#work-type-alias)
+  - [Work (interface)](#work-interface)
 
 ---
 
@@ -26,27 +26,23 @@ Added in v0.1.0
 **Signature**
 
 ```ts
-export declare const WorkC: C.Codec<
-  string,
-  string,
-  Readonly<{ abstract?: string | undefined; DOI: Doi<string>; title: readonly [string] }>
->
+export declare const WorkC: C.Codec<string, string, Work>
 ```
 
 Added in v0.1.0
 
 # model
 
-## Work (type alias)
+## Work (interface)
 
 **Signature**
 
 ```ts
-export type Work = Readonly<{
-  abstract?: string
-  DOI: Doi
-  title: Readonly<[string]>
-}>
+export interface Work {
+  readonly abstract?: string
+  readonly DOI: Doi
+  readonly title: Readonly<[string]>
+}
 ```
 
 Added in v0.1.0

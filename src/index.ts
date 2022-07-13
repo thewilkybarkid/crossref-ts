@@ -19,11 +19,11 @@ import Codec = C.Codec
  * @category model
  * @since 0.1.0
  */
-export type Work = Readonly<{
-  abstract?: string
-  DOI: Doi
-  title: Readonly<[string]>
-}>
+export interface Work {
+  readonly abstract?: string
+  readonly DOI: Doi
+  readonly title: Readonly<[string]>
+}
 
 // -------------------------------------------------------------------------------------
 // codecs
