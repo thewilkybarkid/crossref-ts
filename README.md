@@ -2,6 +2,14 @@
 
 A [Crossref API] client for use with [fp-ts].
 
+## Installation
+
+To install the stable version:
+
+```sh
+npm install crossref-ts
+```
+
 ## Documentation
 
 [📘 Read the documentation][docs]

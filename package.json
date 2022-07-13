@@ -47,6 +47,7 @@
     "node-fetch": "^2.6.7",
     "prettier": "^2.7.1",
     "prettier-plugin-sh": "^0.12.6",
+    "standard-version": "^9.5.0",
     "ts-jest": "^28.0.5",
     "typescript": "^4.7.4"
   },
@@ -58,6 +59,7 @@
     "format:fix": "npm run format -- --write",
     "lint": "eslint .",
     "prepare": "which husky && husky install || true",
+    "release": "standard-version --sign",
     "test": "jest",
     "typecheck": "tsc --noEmit"
   }
