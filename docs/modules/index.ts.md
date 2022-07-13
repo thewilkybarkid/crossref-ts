@@ -14,6 +14,8 @@ Added in v0.1.0
 
 - [codecs](#codecs)
   - [WorkC](#workc)
+- [constructors](#constructors)
+  - [getWork](#getwork)
 - [model](#model)
   - [Work (interface)](#work-interface)
 
@@ -27,6 +29,18 @@ Added in v0.1.0
 
 ```ts
 export declare const WorkC: C.Codec<string, string, Work>
+```
+
+Added in v0.1.0
+
+# constructors
+
+## getWork
+
+**Signature**
+
+```ts
+export declare const getWork: (doi: Doi) => ReaderTaskEither<FetchEnv, unknown, Work>
 ```
 
 Added in v0.1.0

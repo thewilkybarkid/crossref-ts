@@ -2,14 +2,19 @@
  * @since 0.1.0
  */
 import { Doi, isDoi } from 'doi-ts'
+import * as F from 'fetch-fp-ts'
 import * as E from 'fp-ts/Either'
 import * as J from 'fp-ts/Json'
-import { flow, pipe } from 'fp-ts/function'
+import * as RTE from 'fp-ts/ReaderTaskEither'
+import { flow, identity, pipe } from 'fp-ts/function'
+import { StatusCodes } from 'http-status-codes'
 import * as C from 'io-ts/Codec'
 import * as D from 'io-ts/Decoder'
 import safeStableStringify from 'safe-stable-stringify'
 
 import Codec = C.Codec
+import FetchEnv = F.FetchEnv
+import ReaderTaskEither = RTE.ReaderTaskEither
 
 // -------------------------------------------------------------------------------------
 // model
@@ -24,6 +29,23 @@ export interface Work {
   readonly DOI: Doi
   readonly title: Readonly<[string]>
 }
+
+// -------------------------------------------------------------------------------------
+// constructors
+// -------------------------------------------------------------------------------------
+
+/**
+ * @category constructors
+ * @since 0.1.0
+ */
+export const getWork: (doi: Doi) => ReaderTaskEither<FetchEnv, unknown, Work> = doi =>
+  pipe(
+    new URL(doi, 'https://api.crossref.org/works/'),
+    F.Request('GET'),
+    F.send,
+    RTE.filterOrElseW(F.hasStatus(StatusCodes.OK), identity),
+    RTE.chainTaskEitherKW(F.decode(WorkC)),
+  )
 
 // -------------------------------------------------------------------------------------
 // codecs
