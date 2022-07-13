@@ -45,6 +45,37 @@ jobs:
       - name: 'Run linter'
         run: npm run lint
 
+  test:
+    runs-on: ubuntu-20.04
+    env:
+      FORCE_COLOR: 'true'
+    strategy:
+      matrix:
+        node:
+          - 14
+          - 16
+          - 18
+
+    steps:
+      - name: 'Checkout code'
+        uses: actions/checkout@v3
+
+      - name: 'Set up Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: ${{ !env.ACT && 'npm' || '' }}
+
+      - name: 'Update npm'
+        if: ${{ matrix.node == 14 }}
+        run: npm install --global npm@8
+
+      - name: 'Install dependencies'
+        run: npm ci
+
+      - name: 'Run tests'
+        run: npm test
+
   typecheck:
     runs-on: ubuntu-20.04
 
