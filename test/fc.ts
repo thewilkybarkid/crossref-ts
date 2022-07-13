@@ -14,6 +14,11 @@ export const doi = (): fc.Arbitrary<Doi> =>
     .filter(isDoi)
 
 export const crossrefWork = (): fc.Arbitrary<_.Work> =>
-  fc.record({
-    DOI: doi(),
-  })
+  fc.record(
+    {
+      abstract: fc.string(),
+      DOI: doi(),
+      title: fc.tuple(fc.string()),
+    },
+    { requiredKeys: ['DOI', 'title'] },
+  )

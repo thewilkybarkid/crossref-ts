@@ -26,7 +26,11 @@ Added in v0.1.0
 **Signature**
 
 ```ts
-export declare const WorkC: C.Codec<string, string, Readonly<{ DOI: Doi<string> }>>
+export declare const WorkC: C.Codec<
+  string,
+  string,
+  Readonly<{ abstract?: string | undefined; DOI: Doi<string>; title: readonly [string] }>
+>
 ```
 
 Added in v0.1.0
@@ -39,7 +43,9 @@ Added in v0.1.0
 
 ```ts
 export type Work = Readonly<{
+  abstract?: string
   DOI: Doi
+  title: Readonly<[string]>
 }>
 ```
 
