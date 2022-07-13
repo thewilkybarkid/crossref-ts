@@ -8,9 +8,13 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "husky": "^8.0.1"
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1",
+    "prettier-plugin-sh": "^0.12.6"
   },
   "scripts": {
+    "format": "prettier --ignore-unknown --check '**'",
+    "format:fix": "npm run format -- --write",
     "prepare": "which husky && husky install || true"
   }
 }
