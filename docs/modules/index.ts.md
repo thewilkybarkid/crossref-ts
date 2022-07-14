@@ -54,6 +54,18 @@ Added in v0.1.0
 ```ts
 export interface Work {
   readonly abstract?: string
+  readonly author: ReadonlyArray<
+    | {
+        family: string
+        given?: string
+        ORCID?: Orcid
+        prefix?: string
+        suffix?: string
+      }
+    | {
+        name: string
+      }
+  >
   readonly DOI: Doi
   readonly title: ReadonlyArray<string>
 }

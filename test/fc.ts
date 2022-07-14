@@ -1,6 +1,8 @@
+import { mod11_2 } from 'cdigit'
 import { Doi, isDoi } from 'doi-ts'
 import * as fc from 'fast-check'
 import { MockResponseObject } from 'fetch-mock'
+import { Orcid, isOrcid } from 'orcid-id-ts'
 import * as _ from '../src'
 
 export * from 'fast-check'
@@ -17,6 +19,15 @@ export const doi = (): fc.Arbitrary<Doi> =>
     )
     .map(([prefix, suffix]) => `10.${prefix}/${suffix}`)
     .filter(isDoi)
+
+export const orcid = (): fc.Arbitrary<Orcid> =>
+  fc
+    .stringOf(fc.constantFrom('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), {
+      minLength: 4 + 4 + 4 + 3,
+      maxLength: 4 + 4 + 4 + 3,
+    })
+    .map(value => mod11_2.generate(value).replace(/.{4}(?=.)/g, '$&-'))
+    .filter(isOrcid)
 
 const headerName = () =>
   fc.stringOf(
@@ -40,8 +51,23 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
   fc.record(
     {
       abstract: fc.string(),
+      author: fc.array(
+        fc.oneof(
+          fc.record(
+            {
+              family: fc.string(),
+              given: fc.string(),
+              ORCID: orcid(),
+              prefix: fc.string(),
+              suffix: fc.string(),
+            },
+            { requiredKeys: ['family'] },
+          ),
+          fc.record({ name: fc.string() }),
+        ),
+      ),
       DOI: doi(),
       title: fc.array(fc.string()),
     },
-    { requiredKeys: ['DOI', 'title'] },
+    { requiredKeys: ['author', 'DOI', 'title'] },
   )

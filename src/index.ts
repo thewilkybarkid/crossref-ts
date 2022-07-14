@@ -6,10 +6,13 @@ import * as F from 'fetch-fp-ts'
 import * as E from 'fp-ts/Either'
 import * as J from 'fp-ts/Json'
 import * as RTE from 'fp-ts/ReaderTaskEither'
+import * as RA from 'fp-ts/ReadonlyArray'
 import { flow, identity, pipe } from 'fp-ts/function'
+import * as s from 'fp-ts/string'
 import { StatusCodes } from 'http-status-codes'
 import * as C from 'io-ts/Codec'
 import * as D from 'io-ts/Decoder'
+import { Orcid, isOrcid } from 'orcid-id-ts'
 import safeStableStringify from 'safe-stable-stringify'
 
 import Codec = C.Codec
@@ -26,6 +29,18 @@ import ReaderTaskEither = RTE.ReaderTaskEither
  */
 export interface Work {
   readonly abstract?: string
+  readonly author: ReadonlyArray<
+    | {
+        family: string
+        given?: string
+        ORCID?: Orcid
+        prefix?: string
+        suffix?: string
+      }
+    | {
+        name: string
+      }
+  >
   readonly DOI: Doi
   readonly title: ReadonlyArray<string>
 }
@@ -66,6 +81,25 @@ const ReadonlyArrayC = flow(C.array, C.readonly)
 
 const DoiC = C.fromDecoder(D.fromRefinement(isDoi, 'DOI'))
 
+const OrcidC = C.fromDecoder(D.fromRefinement(isOrcid, 'ORCID'))
+
+const OrcidUrlC = C.make(pipe(D.string, D.map(s.replace(/^https?:\/\/orcid\.org\//, '')), D.compose(OrcidC)), {
+  encode: orcid => `https://orcid.org/${orcid}`,
+})
+
+const GroupAuthorC = C.struct({ name: C.string })
+const PersonAuthorC = pipe(
+  C.struct({ family: C.string }),
+  C.intersect(
+    C.partial({
+      given: C.string,
+      ORCID: OrcidUrlC,
+      prefix: C.string,
+      suffix: C.string,
+    }),
+  ),
+)
+
 /**
  * @category codecs
  * @since 0.1.0
@@ -82,6 +116,13 @@ export const WorkC: Codec<string, string, Work> = pipe(
         C.intersect(
           C.partial({
             abstract: C.string,
+            author: ReadonlyArrayC(
+              // Unfortunately, there's no way to describe a union encoder, so we must implement it ourselves.
+              // Refs https://github.com/gcanti/io-ts/issues/625#issuecomment-1007478009
+              C.make(D.union(PersonAuthorC, GroupAuthorC), {
+                encode: author => ('name' in author ? GroupAuthorC.encode(author) : PersonAuthorC.encode(author)),
+              }),
+            ),
           }),
         ),
       ),
@@ -90,5 +131,15 @@ export const WorkC: Codec<string, string, Work> = pipe(
   C.imap(
     message => message.message,
     work => ({ message: work }),
+  ),
+  C.imap(
+    work => ({ author: [], ...work }),
+    work => ({
+      ...work,
+      author: pipe(
+        work.author,
+        RA.match(() => undefined, identity),
+      ),
+    }),
   ),
 )
