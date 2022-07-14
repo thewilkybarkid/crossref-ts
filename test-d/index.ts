@@ -16,7 +16,7 @@ declare const work: Work
 
 expectTypeOf(work.abstract).toEqualTypeOf<string | undefined>()
 expectTypeOf(work.DOI).toEqualTypeOf<Doi>()
-expectTypeOf(work.title).toEqualTypeOf<Readonly<[string]>>()
+expectTypeOf(work.title).toEqualTypeOf<ReadonlyArray<string>>()
 
 //
 // getWork

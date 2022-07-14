@@ -55,7 +55,7 @@ Added in v0.1.0
 export interface Work {
   readonly abstract?: string
   readonly DOI: Doi
-  readonly title: Readonly<[string]>
+  readonly title: ReadonlyArray<string>
 }
 ```
 

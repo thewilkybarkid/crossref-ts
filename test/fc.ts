@@ -41,7 +41,7 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
     {
       abstract: fc.string(),
       DOI: doi(),
-      title: fc.tuple(fc.string()),
+      title: fc.array(fc.string()),
     },
     { requiredKeys: ['DOI', 'title'] },
   )

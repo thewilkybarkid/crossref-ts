@@ -27,7 +27,7 @@ import ReaderTaskEither = RTE.ReaderTaskEither
 export interface Work {
   readonly abstract?: string
   readonly DOI: Doi
-  readonly title: Readonly<[string]>
+  readonly title: ReadonlyArray<string>
 }
 
 // -------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ const JsonC = C.make(
   { encode: safeStableStringify },
 )
 
-const ReadonlyTupleC = flow(C.tuple, C.readonly)
+const ReadonlyArrayC = flow(C.array, C.readonly)
 
 const DoiC = C.fromDecoder(D.fromRefinement(isDoi, 'DOI'))
 
@@ -77,7 +77,7 @@ export const WorkC: Codec<string, string, Work> = pipe(
       message: pipe(
         C.struct({
           DOI: DoiC,
-          title: ReadonlyTupleC(C.string),
+          title: ReadonlyArrayC(C.string),
         }),
         C.intersect(
           C.partial({
