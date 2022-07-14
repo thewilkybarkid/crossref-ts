@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.0...v0.1.1) (2022-07-14)
+
+
+### Features
+
+* add author to Work ([c5d725c](https://github.com/thewilkybarkid/crossref-ts/commit/c5d725cdecb3f387d83b7d7261358f2ccabfcc81))
+* add the published date to Work ([c8ac5ec](https://github.com/thewilkybarkid/crossref-ts/commit/c8ac5ec5b429a3b9c1f1b2a4a60718deb5ff460a))
+
+
+### Bug Fixes
+
+* allow for 0 to n titles ([4d57257](https://github.com/thewilkybarkid/crossref-ts/commit/4d57257b1fbc4469e73cbcff08639f8db26bf2eb))
+
 ## 0.1.0 (2022-07-13)
 
 
