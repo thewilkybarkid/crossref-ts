@@ -1,3 +1,4 @@
+import { Temporal } from '@js-temporal/polyfill'
 import { mod11_2 } from 'cdigit'
 import { Doi, isDoi } from 'doi-ts'
 import * as fc from 'fast-check'
@@ -47,6 +48,27 @@ export const response = ({
     status: status ?? fc.oneof(statusCode(), fc.constant(undefined)),
   })
 
+const year = (): fc.Arbitrary<number> => fc.integer({ min: -271820, max: 275759 })
+
+const plainYearMonth = (): fc.Arbitrary<Temporal.PlainYearMonth> =>
+  fc
+    .record({
+      year: year(),
+      month: fc.integer({ min: 1, max: 12 }),
+    })
+    .map(args => Temporal.PlainYearMonth.from(args))
+
+const plainDate = (): fc.Arbitrary<Temporal.PlainDate> =>
+  fc
+    .record({
+      year: year(),
+      month: fc.integer({ min: 1, max: 12 }),
+      day: fc.integer({ min: 1, max: 31 }),
+    })
+    .map(args => Temporal.PlainDate.from(args))
+
+const partialDate = (): fc.Arbitrary<_.PartialDate> => fc.oneof(year(), plainYearMonth(), plainDate())
+
 export const crossrefWork = (): fc.Arbitrary<_.Work> =>
   fc.record(
     {
@@ -67,7 +89,8 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
         ),
       ),
       DOI: doi(),
+      published: partialDate(),
       title: fc.array(fc.string()),
     },
-    { requiredKeys: ['author', 'DOI', 'title'] },
+    { requiredKeys: ['author', 'DOI', 'published', 'title'] },
   )

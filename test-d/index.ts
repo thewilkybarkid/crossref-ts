@@ -1,3 +1,4 @@
+import { Temporal } from '@js-temporal/polyfill'
 import { Doi } from 'doi-ts'
 import { expectTypeOf } from 'expect-type'
 import { FetchEnv } from 'fetch-fp-ts'
@@ -6,9 +7,13 @@ import { Codec } from 'io-ts/Codec'
 import { Orcid } from 'orcid-id-ts'
 import * as _ from '../src'
 
+import PartialDate = _.PartialDate
+import PlainDate = Temporal.PlainDate
+import PlainYearMonth = Temporal.PlainYearMonth
 import Work = _.Work
 
 declare const doi: Doi
+declare const partialDate: PartialDate
 declare const work: Work
 
 //
@@ -20,7 +25,16 @@ expectTypeOf(work.author).toEqualTypeOf<
   ReadonlyArray<{ family: string; given?: string; ORCID?: Orcid; prefix?: string; suffix?: string } | { name: string }>
 >()
 expectTypeOf(work.DOI).toEqualTypeOf<Doi>()
+expectTypeOf(work.published).toEqualTypeOf(partialDate)
 expectTypeOf(work.title).toEqualTypeOf<ReadonlyArray<string>>()
+
+//
+// PartialDate
+//
+
+expectTypeOf<number>().toMatchTypeOf<PartialDate>()
+expectTypeOf<PlainYearMonth>().toMatchTypeOf<PartialDate>()
+expectTypeOf<PlainDate>().toMatchTypeOf<PartialDate>()
 
 //
 // getWork

@@ -1,6 +1,7 @@
 /**
  * @since 0.1.0
  */
+import { Temporal } from '@js-temporal/polyfill'
 import { Doi, isDoi } from 'doi-ts'
 import * as F from 'fetch-fp-ts'
 import * as E from 'fp-ts/Either'
@@ -17,6 +18,8 @@ import safeStableStringify from 'safe-stable-stringify'
 
 import Codec = C.Codec
 import FetchEnv = F.FetchEnv
+import PlainDate = Temporal.PlainDate
+import PlainYearMonth = Temporal.PlainYearMonth
 import ReaderTaskEither = RTE.ReaderTaskEither
 
 // -------------------------------------------------------------------------------------
@@ -42,8 +45,15 @@ export interface Work {
       }
   >
   readonly DOI: Doi
+  readonly published: PartialDate
   readonly title: ReadonlyArray<string>
 }
+
+/**
+ * @category model
+ * @since 0.1.1
+ */
+export type PartialDate = number | PlainYearMonth | PlainDate
 
 // -------------------------------------------------------------------------------------
 // constructors
@@ -100,6 +110,36 @@ const PersonAuthorC = pipe(
   ),
 )
 
+const PartialDateC = pipe(
+  C.struct({
+    // Unfortunately, there's no way to describe a union encoder, so we must implement it ourselves.
+    // Refs https://github.com/gcanti/io-ts/issues/625#issuecomment-1007478009
+    'date-parts': C.tuple(
+      C.make(
+        pipe(
+          D.union(D.tuple(D.number, D.number, D.number), D.tuple(D.number, D.number), D.tuple(D.number)),
+          D.map(
+            ([year, month, day]): PartialDate =>
+              day ? PlainDate.from({ day, month, year }) : month ? PlainYearMonth.from({ month, year }) : year,
+          ),
+        ),
+        {
+          encode: date =>
+            date instanceof PlainDate
+              ? tuple(date.year, date.month, date.day)
+              : date instanceof PlainYearMonth
+              ? tuple(date.year, date.month)
+              : tuple(date),
+        },
+      ),
+    ),
+  }),
+  C.imap(
+    partialDate => partialDate['date-parts'][0],
+    partialDate => ({ 'date-parts': tuple(partialDate) }),
+  ),
+)
+
 /**
  * @category codecs
  * @since 0.1.0
@@ -111,6 +151,7 @@ export const WorkC: Codec<string, string, Work> = pipe(
       message: pipe(
         C.struct({
           DOI: DoiC,
+          published: PartialDateC,
           title: ReadonlyArrayC(C.string),
         }),
         C.intersect(
@@ -143,3 +184,14 @@ export const WorkC: Codec<string, string, Work> = pipe(
     }),
   ),
 )
+
+// -------------------------------------------------------------------------------------
+// utils
+// -------------------------------------------------------------------------------------
+
+function tuple<A>(a: A): [A]
+function tuple<A, B>(a: A, b: B): [A, B]
+function tuple<A, B, C>(a: A, b: B, c: C): [A, B, C]
+function tuple(...values: ReadonlyArray<unknown>) {
+  return values
+}
