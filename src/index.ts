@@ -49,7 +49,9 @@ export interface Work {
   readonly license: ReadonlyArray<{ start: PartialDate; URL: URL }>
   readonly published: PartialDate
   readonly publisher: string
+  readonly subtype?: string
   readonly title: ReadonlyArray<string>
+  readonly type: string
 }
 
 /**
@@ -170,6 +172,7 @@ export const WorkC: Codec<string, string, Work> = pipe(
           published: PartialDateC,
           publisher: C.string,
           title: ReadonlyArrayC(C.string),
+          type: C.string,
         }),
         C.intersect(
           C.partial({
@@ -192,6 +195,7 @@ export const WorkC: Codec<string, string, Work> = pipe(
                 URL: UrlC,
               }),
             ),
+            subtype: C.string,
           }),
         ),
       ),

@@ -82,7 +82,9 @@ export interface Work {
   readonly license: ReadonlyArray<{ start: PartialDate; URL: URL }>
   readonly published: PartialDate
   readonly publisher: string
+  readonly subtype?: string
   readonly title: ReadonlyArray<string>
+  readonly type: string
 }
 ```
 

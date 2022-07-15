@@ -95,7 +95,9 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
       license: fc.array(fc.record({ start: partialDate(), URL: url() })),
       published: partialDate(),
       publisher: fc.string(),
+      subtype: fc.string(),
       title: fc.array(fc.string()),
+      type: fc.string(),
     },
-    { requiredKeys: ['author', 'DOI', 'institution', 'license', 'published', 'publisher', 'title'] },
+    { requiredKeys: ['author', 'DOI', 'institution', 'license', 'published', 'publisher', 'title', 'type'] },
   )
