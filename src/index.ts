@@ -49,6 +49,7 @@ export interface Work {
   readonly license: ReadonlyArray<{ start: PartialDate; URL: URL }>
   readonly published: PartialDate
   readonly publisher: string
+  readonly resource: { primary: { URL: URL } }
   readonly subtype?: string
   readonly title: ReadonlyArray<string>
   readonly type: string
@@ -171,6 +172,9 @@ export const WorkC: Codec<string, string, Work> = pipe(
           DOI: DoiC,
           published: PartialDateC,
           publisher: C.string,
+          resource: C.struct({
+            primary: C.struct({ URL: UrlC }),
+          }),
           title: ReadonlyArrayC(C.string),
           type: C.string,
         }),
