@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.1...v0.1.2) (2022-07-15)
+
+
+### Features
+
+* add institutions to Work ([7398498](https://github.com/thewilkybarkid/crossref-ts/commit/7398498c8a523069b30c562ba8afc8494145e25d))
+* add licenses to Work ([2f9edb0](https://github.com/thewilkybarkid/crossref-ts/commit/2f9edb0595769f583136f765ac663dda252ee071))
+* add publisher to Work ([78902ca](https://github.com/thewilkybarkid/crossref-ts/commit/78902caa70f4f212e784bcbdac863fd7dc454c2b))
+* add the resource to Work ([31b9d3a](https://github.com/thewilkybarkid/crossref-ts/commit/31b9d3a4c2c14bdbe6af76079bcd5488d34f44ea))
+* add types to Work ([4438ab7](https://github.com/thewilkybarkid/crossref-ts/commit/4438ab7a689a2acde7e5634b055ea07f01a7e755))
+
 ### [0.1.1](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.0...v0.1.1) (2022-07-14)
 
 
