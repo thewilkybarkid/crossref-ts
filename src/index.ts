@@ -46,6 +46,7 @@ export interface Work {
   >
   readonly DOI: Doi
   readonly institution: ReadonlyArray<{ name: string }>
+  readonly license: ReadonlyArray<{ start: PartialDate; URL: URL }>
   readonly published: PartialDate
   readonly title: ReadonlyArray<string>
 }
@@ -89,6 +90,19 @@ const JsonC = C.make(
 )
 
 const ReadonlyArrayC = flow(C.array, C.readonly)
+
+const UrlC = C.make(
+  pipe(
+    D.string,
+    D.parse(s =>
+      E.tryCatch(
+        () => new URL(s),
+        () => D.error(s, 'URL'),
+      ),
+    ),
+  ),
+  { encode: String },
+)
 
 const DoiC = C.fromDecoder(D.fromRefinement(isDoi, 'DOI'))
 
@@ -170,6 +184,12 @@ export const WorkC: Codec<string, string, Work> = pipe(
                 name: C.string,
               }),
             ),
+            license: ReadonlyArrayC(
+              C.struct({
+                start: PartialDateC,
+                URL: UrlC,
+              }),
+            ),
           }),
         ),
       ),
@@ -180,7 +200,7 @@ export const WorkC: Codec<string, string, Work> = pipe(
     work => ({ message: work }),
   ),
   C.imap(
-    work => ({ author: [], institution: [], ...work }),
+    work => ({ author: [], institution: [], license: [], ...work }),
     work => ({
       ...work,
       author: pipe(
@@ -189,6 +209,10 @@ export const WorkC: Codec<string, string, Work> = pipe(
       ),
       institution: pipe(
         work.institution,
+        RA.match(() => undefined, identity),
+      ),
+      license: pipe(
+        work.license,
         RA.match(() => undefined, identity),
       ),
     }),

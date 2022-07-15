@@ -12,6 +12,8 @@ export const error = (): fc.Arbitrary<Error> => fc.string().map(error => new Err
 
 export const statusCode = (): fc.Arbitrary<number> => fc.integer({ min: 200, max: 599 })
 
+export const url = (): fc.Arbitrary<URL> => fc.webUrl().map(url => new URL(url))
+
 export const doi = (): fc.Arbitrary<Doi> =>
   fc
     .tuple(
@@ -90,8 +92,9 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
       ),
       DOI: doi(),
       institution: fc.array(fc.record({ name: fc.string() })),
+      license: fc.array(fc.record({ start: partialDate(), URL: url() })),
       published: partialDate(),
       title: fc.array(fc.string()),
     },
-    { requiredKeys: ['author', 'DOI', 'institution', 'published', 'title'] },
+    { requiredKeys: ['author', 'DOI', 'institution', 'license', 'published', 'title'] },
   )
