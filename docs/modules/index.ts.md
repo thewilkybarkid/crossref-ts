@@ -78,6 +78,7 @@ export interface Work {
       }
   >
   readonly DOI: Doi
+  readonly institution: ReadonlyArray<{ name: string }>
   readonly published: PartialDate
   readonly title: ReadonlyArray<string>
 }

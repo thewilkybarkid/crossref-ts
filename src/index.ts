@@ -45,6 +45,7 @@ export interface Work {
       }
   >
   readonly DOI: Doi
+  readonly institution: ReadonlyArray<{ name: string }>
   readonly published: PartialDate
   readonly title: ReadonlyArray<string>
 }
@@ -164,6 +165,11 @@ export const WorkC: Codec<string, string, Work> = pipe(
                 encode: author => ('name' in author ? GroupAuthorC.encode(author) : PersonAuthorC.encode(author)),
               }),
             ),
+            institution: ReadonlyArrayC(
+              C.struct({
+                name: C.string,
+              }),
+            ),
           }),
         ),
       ),
@@ -174,11 +180,15 @@ export const WorkC: Codec<string, string, Work> = pipe(
     work => ({ message: work }),
   ),
   C.imap(
-    work => ({ author: [], ...work }),
+    work => ({ author: [], institution: [], ...work }),
     work => ({
       ...work,
       author: pipe(
         work.author,
+        RA.match(() => undefined, identity),
+      ),
+      institution: pipe(
+        work.institution,
         RA.match(() => undefined, identity),
       ),
     }),
