@@ -28,6 +28,7 @@ expectTypeOf(work.DOI).toEqualTypeOf<Doi>()
 expectTypeOf(work.institution).toEqualTypeOf<ReadonlyArray<{ name: string }>>()
 expectTypeOf(work.license).toEqualTypeOf<ReadonlyArray<{ start: PartialDate; URL: URL }>>()
 expectTypeOf(work.published).toEqualTypeOf(partialDate)
+expectTypeOf(work.publisher).toEqualTypeOf<string>()
 expectTypeOf(work.title).toEqualTypeOf<ReadonlyArray<string>>()
 
 //

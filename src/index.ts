@@ -48,6 +48,7 @@ export interface Work {
   readonly institution: ReadonlyArray<{ name: string }>
   readonly license: ReadonlyArray<{ start: PartialDate; URL: URL }>
   readonly published: PartialDate
+  readonly publisher: string
   readonly title: ReadonlyArray<string>
 }
 
@@ -167,6 +168,7 @@ export const WorkC: Codec<string, string, Work> = pipe(
         C.struct({
           DOI: DoiC,
           published: PartialDateC,
+          publisher: C.string,
           title: ReadonlyArrayC(C.string),
         }),
         C.intersect(

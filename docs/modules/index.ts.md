@@ -81,6 +81,7 @@ export interface Work {
   readonly institution: ReadonlyArray<{ name: string }>
   readonly license: ReadonlyArray<{ start: PartialDate; URL: URL }>
   readonly published: PartialDate
+  readonly publisher: string
   readonly title: ReadonlyArray<string>
 }
 ```
