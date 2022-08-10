@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.2...v0.1.3) (2022-08-10)
+
+
+### Features
+
+* add the group title to Work ([eac64e9](https://github.com/thewilkybarkid/crossref-ts/commit/eac64e9be7fa92960c5e27cd3ae2be55e1768031))
+* add the language to Work ([494cf08](https://github.com/thewilkybarkid/crossref-ts/commit/494cf0862b42470c49dff3f116fc19ffdbadf24a))
+
 ### [0.1.2](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.1...v0.1.2) (2022-07-15)
 
 
