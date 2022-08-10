@@ -13,6 +13,7 @@ import * as s from 'fp-ts/string'
 import { StatusCodes } from 'http-status-codes'
 import * as C from 'io-ts/Codec'
 import * as D from 'io-ts/Decoder'
+import ISO6391, { LanguageCode } from 'iso-639-1'
 import { Orcid, isOrcid } from 'orcid-id-ts'
 import safeStableStringify from 'safe-stable-stringify'
 
@@ -46,6 +47,7 @@ export interface Work {
   >
   readonly DOI: Doi
   readonly institution: ReadonlyArray<{ name: string }>
+  readonly language?: LanguageCode
   readonly license: ReadonlyArray<{ start: PartialDate; URL: URL }>
   readonly published: PartialDate
   readonly publisher: string
@@ -81,6 +83,13 @@ export const getWork: (doi: Doi) => ReaderTaskEither<FetchEnv, unknown, Work> = 
 // -------------------------------------------------------------------------------------
 // codecs
 // -------------------------------------------------------------------------------------
+
+const Iso6391C = C.fromDecoder(
+  pipe(
+    D.string,
+    D.compose(D.fromRefinement((code: string): code is LanguageCode => ISO6391.validate(code), 'ISO-639-1 Code')),
+  ),
+)
 
 const JsonC = C.make(
   {
@@ -193,6 +202,7 @@ export const WorkC: Codec<string, string, Work> = pipe(
                 name: C.string,
               }),
             ),
+            language: Iso6391C,
             license: ReadonlyArrayC(
               C.struct({
                 start: PartialDateC,

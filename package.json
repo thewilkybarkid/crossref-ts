@@ -12,6 +12,7 @@
   "dependencies": {
     "@js-temporal/polyfill": "^0.4.1",
     "http-status-codes": "^2.2.0",
+    "iso-639-1": "^2.1.15",
     "safe-stable-stringify": "^2.3.1"
   },
   "peerDependencies": {

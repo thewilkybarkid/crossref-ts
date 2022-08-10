@@ -3,6 +3,7 @@ import { mod11_2 } from 'cdigit'
 import { Doi, isDoi } from 'doi-ts'
 import * as fc from 'fast-check'
 import { MockResponseObject } from 'fetch-mock'
+import ISO6391 from 'iso-639-1'
 import { Orcid, isOrcid } from 'orcid-id-ts'
 import * as _ from '../src'
 
@@ -92,6 +93,7 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
       ),
       DOI: doi(),
       institution: fc.array(fc.record({ name: fc.string() })),
+      language: fc.constantFrom(...ISO6391.getAllCodes()),
       license: fc.array(fc.record({ start: partialDate(), URL: url() })),
       published: partialDate(),
       publisher: fc.string(),

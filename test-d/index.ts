@@ -4,6 +4,7 @@ import { expectTypeOf } from 'expect-type'
 import { FetchEnv } from 'fetch-fp-ts'
 import { ReaderTaskEither } from 'fp-ts/ReaderTaskEither'
 import { Codec } from 'io-ts/Codec'
+import { LanguageCode } from 'iso-639-1'
 import { Orcid } from 'orcid-id-ts'
 import * as _ from '../src'
 
@@ -26,6 +27,7 @@ expectTypeOf(work.author).toEqualTypeOf<
 >()
 expectTypeOf(work.DOI).toEqualTypeOf<Doi>()
 expectTypeOf(work.institution).toEqualTypeOf<ReadonlyArray<{ name: string }>>()
+expectTypeOf(work.language).toEqualTypeOf<LanguageCode | undefined>()
 expectTypeOf(work.license).toEqualTypeOf<ReadonlyArray<{ start: PartialDate; URL: URL }>>()
 expectTypeOf(work.published).toEqualTypeOf(partialDate)
 expectTypeOf(work.publisher).toEqualTypeOf<string>()
