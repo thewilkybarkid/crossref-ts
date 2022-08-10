@@ -92,6 +92,7 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
         ),
       ),
       DOI: doi(),
+      'group-title': fc.string(),
       institution: fc.array(fc.record({ name: fc.string() })),
       language: fc.constantFrom(...ISO6391.getAllCodes()),
       license: fc.array(fc.record({ start: partialDate(), URL: url() })),

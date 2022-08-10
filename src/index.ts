@@ -46,6 +46,7 @@ export interface Work {
       }
   >
   readonly DOI: Doi
+  readonly 'group-title'?: string
   readonly institution: ReadonlyArray<{ name: string }>
   readonly language?: LanguageCode
   readonly license: ReadonlyArray<{ start: PartialDate; URL: URL }>
@@ -197,6 +198,7 @@ export const WorkC: Codec<string, string, Work> = pipe(
                 encode: author => ('name' in author ? GroupAuthorC.encode(author) : PersonAuthorC.encode(author)),
               }),
             ),
+            'group-title': C.string,
             institution: ReadonlyArrayC(
               C.struct({
                 name: C.string,

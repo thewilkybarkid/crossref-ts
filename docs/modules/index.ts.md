@@ -78,6 +78,7 @@ export interface Work {
       }
   >
   readonly DOI: Doi
+  readonly 'group-title'?: string
   readonly institution: ReadonlyArray<{ name: string }>
   readonly language?: LanguageCode
   readonly license: ReadonlyArray<{ start: PartialDate; URL: URL }>
