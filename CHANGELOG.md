@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.3...v0.1.4) (2022-09-05)
+
+
+### Bug Fixes
+
+* encode DOIs in URLs ([78b79eb](https://github.com/thewilkybarkid/crossref-ts/commit/78b79eb66f8d7585d1189f986e9b0dafac8c51c7))
+
 ### [0.1.3](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.2...v0.1.3) (2022-08-10)
 
 
