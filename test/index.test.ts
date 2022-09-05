@@ -22,7 +22,9 @@ describe('crossref-ts', () => {
                 ),
               ),
             async (doi, [work, response]) => {
-              const fetch = fetchMock.sandbox().getOnce(`https://api.crossref.org/works/${doi}`, response)
+              const fetch = fetchMock
+                .sandbox()
+                .getOnce(`https://api.crossref.org/works/${encodeURIComponent(doi)}`, response)
 
               const actual = await _.getWork(doi)({ fetch })()
 
@@ -35,7 +37,9 @@ describe('crossref-ts', () => {
       test('when the work cannot be decoded', async () => {
         await fc.assert(
           fc.asyncProperty(fc.doi(), fc.response({ status: fc.constant(StatusCodes.OK) }), async (doi, response) => {
-            const fetch = fetchMock.sandbox().getOnce(`https://api.crossref.org/works/${doi}`, response)
+            const fetch = fetchMock
+              .sandbox()
+              .getOnce(`https://api.crossref.org/works/${encodeURIComponent(doi)}`, response)
 
             const actual = await _.getWork(doi)({ fetch })()
 
@@ -50,7 +54,9 @@ describe('crossref-ts', () => {
             fc.doi(),
             fc.response({ status: fc.statusCode().filter(status => status !== StatusCodes.OK) }),
             async (doi, response) => {
-              const fetch = fetchMock.sandbox().getOnce(`https://api.crossref.org/works/${doi}`, response)
+              const fetch = fetchMock
+                .sandbox()
+                .getOnce(`https://api.crossref.org/works/${encodeURIComponent(doi)}`, response)
 
               const actual = await _.getWork(doi)({ fetch })()
 

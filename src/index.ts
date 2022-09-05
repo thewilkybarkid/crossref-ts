@@ -74,7 +74,7 @@ export type PartialDate = number | PlainYearMonth | PlainDate
  */
 export const getWork: (doi: Doi) => ReaderTaskEither<FetchEnv, unknown, Work> = doi =>
   pipe(
-    new URL(doi, 'https://api.crossref.org/works/'),
+    new URL(encodeURIComponent(doi), 'https://api.crossref.org/works/'),
     F.Request('GET'),
     F.send,
     RTE.filterOrElseW(F.hasStatus(StatusCodes.OK), identity),
