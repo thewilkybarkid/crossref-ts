@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.4...v0.1.5) (2023-08-14)
+
+
+### Features
+
+* add the created date to Work ([5340126](https://github.com/thewilkybarkid/crossref-ts/commit/5340126a2873566829e82611f7d6b34b10751485))
+* add the description to Work ([c2d37fe](https://github.com/thewilkybarkid/crossref-ts/commit/c2d37fe2a50f0d477cfda356094d924cf0659589))
+
+
+### Bug Fixes
+
+* make the published date optional ([daa5d08](https://github.com/thewilkybarkid/crossref-ts/commit/daa5d0877615414d044cae3fab5615f0b8ec0b8b))
+
 ### [0.1.4](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.3...v0.1.4) (2022-09-05)
 
 
