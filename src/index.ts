@@ -45,6 +45,7 @@ export interface Work {
         name: string
       }
   >
+  readonly created: PartialDate
   readonly description?: string
   readonly DOI: Doi
   readonly 'group-title'?: string
@@ -180,6 +181,7 @@ export const WorkC: Codec<string, string, Work> = pipe(
     C.struct({
       message: pipe(
         C.struct({
+          created: PartialDateC,
           DOI: DoiC,
           publisher: C.string,
           resource: C.struct({

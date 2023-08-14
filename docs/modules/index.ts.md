@@ -77,6 +77,7 @@ export interface Work {
         name: string
       }
   >
+  readonly created: PartialDate
   readonly description?: string
   readonly DOI: Doi
   readonly 'group-title'?: string

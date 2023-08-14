@@ -91,6 +91,7 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
           fc.record({ name: fc.string() }),
         ),
       ),
+      created: partialDate(),
       description: fc.string(),
       DOI: doi(),
       'group-title': fc.string(),
@@ -109,6 +110,6 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
       type: fc.string(),
     },
     {
-      requiredKeys: ['author', 'DOI', 'institution', 'license', 'publisher', 'resource', 'title', 'type'],
+      requiredKeys: ['author', 'created', 'DOI', 'institution', 'license', 'publisher', 'resource', 'title', 'type'],
     },
   )

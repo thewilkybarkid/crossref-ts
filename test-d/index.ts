@@ -24,6 +24,7 @@ expectTypeOf(work.abstract).toEqualTypeOf<string | undefined>()
 expectTypeOf(work.author).toEqualTypeOf<
   ReadonlyArray<{ family: string; given?: string; ORCID?: Orcid; prefix?: string; suffix?: string } | { name: string }>
 >()
+expectTypeOf(work.created).toEqualTypeOf<PartialDate>()
 expectTypeOf(work.description).toEqualTypeOf<string | undefined>()
 expectTypeOf(work.DOI).toEqualTypeOf<Doi>()
 expectTypeOf(work['group-title']).toEqualTypeOf<string | undefined>()
