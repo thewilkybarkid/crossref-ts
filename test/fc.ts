@@ -91,6 +91,7 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
           fc.record({ name: fc.string() }),
         ),
       ),
+      description: fc.string(),
       DOI: doi(),
       'group-title': fc.string(),
       institution: fc.array(fc.record({ name: fc.string() })),
