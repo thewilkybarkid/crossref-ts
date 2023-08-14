@@ -51,7 +51,7 @@ export interface Work {
   readonly institution: ReadonlyArray<{ name: string }>
   readonly language?: LanguageCode
   readonly license: ReadonlyArray<{ start: PartialDate; URL: URL }>
-  readonly published: PartialDate
+  readonly published?: PartialDate
   readonly publisher: string
   readonly resource: { primary: { URL: URL } }
   readonly subtype?: string
@@ -181,7 +181,6 @@ export const WorkC: Codec<string, string, Work> = pipe(
       message: pipe(
         C.struct({
           DOI: DoiC,
-          published: PartialDateC,
           publisher: C.string,
           resource: C.struct({
             primary: C.struct({ URL: UrlC }),
@@ -213,6 +212,7 @@ export const WorkC: Codec<string, string, Work> = pipe(
                 URL: UrlC,
               }),
             ),
+            published: PartialDateC,
             subtype: C.string,
           }),
         ),

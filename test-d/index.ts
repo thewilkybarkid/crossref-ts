@@ -14,7 +14,6 @@ import PlainYearMonth = Temporal.PlainYearMonth
 import Work = _.Work
 
 declare const doi: Doi
-declare const partialDate: PartialDate
 declare const work: Work
 
 //
@@ -31,7 +30,7 @@ expectTypeOf(work['group-title']).toEqualTypeOf<string | undefined>()
 expectTypeOf(work.institution).toEqualTypeOf<ReadonlyArray<{ name: string }>>()
 expectTypeOf(work.language).toEqualTypeOf<LanguageCode | undefined>()
 expectTypeOf(work.license).toEqualTypeOf<ReadonlyArray<{ start: PartialDate; URL: URL }>>()
-expectTypeOf(work.published).toEqualTypeOf(partialDate)
+expectTypeOf(work.published).toEqualTypeOf<PartialDate | undefined>()
 expectTypeOf(work.publisher).toEqualTypeOf<string>()
 expectTypeOf(work.resource.primary).toEqualTypeOf<{ URL: URL }>()
 expectTypeOf(work.subtype).toEqualTypeOf<string | undefined>()

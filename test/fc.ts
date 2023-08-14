@@ -109,6 +109,6 @@ export const crossrefWork = (): fc.Arbitrary<_.Work> =>
       type: fc.string(),
     },
     {
-      requiredKeys: ['author', 'DOI', 'institution', 'license', 'published', 'publisher', 'resource', 'title', 'type'],
+      requiredKeys: ['author', 'DOI', 'institution', 'license', 'publisher', 'resource', 'title', 'type'],
     },
   )
