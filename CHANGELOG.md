@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.5...v0.1.6) (2025-03-31)
+
+
+### Features
+
+* improve compatibility by treating Temporal as a peer dependency ([a0586d5](https://github.com/thewilkybarkid/crossref-ts/commit/a0586d5199a57baa98f04d0d675e7a9fdbd9e6c8))
+* support Temporal polyfill 0.5 ([8d05f2e](https://github.com/thewilkybarkid/crossref-ts/commit/8d05f2efe96cd24d02cdada4a6f4617ef14673bb))
+
 ### [0.1.5](https://github.com/thewilkybarkid/crossref-ts/compare/v0.1.4...v0.1.5) (2023-08-14)
 
 

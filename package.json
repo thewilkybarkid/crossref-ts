@@ -1,7 +1,7 @@
 {
   "name": "crossref-ts",
   "description": "A Crossref API client for use with fp-ts.",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "MIT",
   "homepage": "https://github.com/thewilkybarkid/crossref-ts",
   "repository": "github:thewilkybarkid/crossref-ts",
